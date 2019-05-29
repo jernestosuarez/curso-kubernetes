@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hola-mundo-pod
+  labels:
+    app: holamundo
+spec:
+  containers:
+    - name: demo
+      image: eu.gcr.io/ramina/web:last
+      ports:
+        - containerPort: 80
