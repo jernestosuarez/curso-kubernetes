@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: first-app-pod
+  labels:
+    app: firstapp
+spec:
+  containers:
+    - name: demo
+      image: eu.gcr.io/wdps-prj-terraform-e8b60c97/node:latest
+      ports:
+        - containerPort: 3000
+          name: nodejs-port
