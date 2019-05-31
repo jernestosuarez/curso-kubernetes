@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: readiness-app-test
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: firstapp
+    spec:
+      containers:
+       - name: demo
+         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/node:latest
+         ports:
+           - containerPort: 3000
+             name: nodejs-port  
+         livenessProbe:
+             httpGet:
+               path: /
+               port: 3000
+             initialDelaySeconds: 15
+             timeoutSeconds: 30 
