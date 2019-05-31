@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: first-app-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: firstapp
+    spec:
+      containers:
+       - name: demo
+         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/node:latest
+         ports:
+           - containerPort: 3000
+             name: nodejs-port  
