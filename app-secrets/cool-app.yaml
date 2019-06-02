@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: cool-app
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rails
+    spec:
+      containers:
+       - name: demo
+         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/cool-app:v.1
+         ports:
+           - containerPort: 3000
+             name: rails-port  
+         env:
+         - name: USUARIO
+           valueFrom:
+             secretKeyRef:
+                name: user-pass
+                key: username
+         - name: PASSWORD
+           valueFrom:
+             secretKeyRef:
+                name: user-pass
+                key: password
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cool-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: rails
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: rails-port
