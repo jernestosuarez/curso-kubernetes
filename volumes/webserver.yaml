@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webserver
+  labels:
+    app: web
+spec:
+  containers:
+    - name: demo
+      image: eu.gcr.io/wdps-prj-terraform-e8b60c97/web-empty:v1
+      ports:
+        - containerPort: 80
+      volumeMounts:
+      - mountPath: /var/www/html/
+        name: test-volume
+  volumes:
+  - name: test-volume
+    gcePersistentDisk:
+      pdName: mi-volumen
+      fsType: ext4
