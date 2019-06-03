@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webserver-claim2
+  labels:
+    app: web
+spec:
+  containers:
+    - name: demo
+      image: eu.gcr.io/wdps-prj-terraform-e8b60c97/web-empty:v1
+      ports:
+        - containerPort: 80
+      volumeMounts:
+      - mountPath: /var/www/html/
+        name: mi-volumen
+  volumes:
+  - name: mi-volumen
+    persistentVolumeClaim:
+      claimName: claim-volumen
+
+      #TO-DO elegir el volumen del claim

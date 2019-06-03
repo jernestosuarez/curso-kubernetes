@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  REDIS_URL: "redis://redis:6379/0"
+  CELERY_BROKER_URL: "redis://redis:6379/0"
+  CELERY_FLOWER_USER: "user"
+  CELERY_FLOWER_PASSWORD: "password"
+  FLOWER_PORT: "5555"
+  DATABASE_URL: "postgres://user:fcebneERDMsEw@foo.bar:5432/data"
+  DJANGO_SETTINGS_MODULE: "config.settings.production"
+  DJANGO_SECRET_KEY: "sdndfbceERDNSasdaeDADAa00sae"
+  DJANGO_ADMIN_URL: "admin/"
+  DJANGO_ALLOWED_HOSTS: "host.foo.bar"
+  DJANGO_DEFAULT_FROM_EMAIL: "BOFH Account <no-reply@foo.br"
+  DJANGO_SECURE_SSL_REDIRECT: "True"
+  DJANGO_SESSION_COOKIE_SECURE: "True"
+  DJANGO_CSRF_COOKIE_SECURE: "True"
+  RECAPTCHA_SECRET_KEY: "425G4R8FH9U93JRW9485UWJ"
+  RECAPTCHA_VERIFY_ENDPOINT: "https://www.google.com/recaptcha/api/siteverify"
+  POSTGRES_HOST: "prpi-eu-db.chnw2amv4beh.eu-west-3.rds.amazonaws.com"
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: "database"
+  POSTGRES_USER: "user"
+  POSTGRES_PASSWORD: "fcebneERDMsEw"
+  DJANGO_AWS_ACCESS_KEY_ID: "AOURHFEO3OINAFO34FF"
+  DJANGO_AWS_SECRET_ACCESS_KEY: "W/0+3sdndfbceERDNSasdaeDADAa00sae"
+  DJANGO_AWS_STORAGE_BUCKET_NAME: "django-static-bucket"
+metadata:
+  name: backend-config
