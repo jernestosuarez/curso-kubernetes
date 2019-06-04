@@ -1,0 +1,19 @@
+
+<p id="notice"><%= notice %></p>
+<p class="lead">
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p class="lead">
+  <strong>Body:</strong>
+  <%= @post.body %>
+</p>
+
+<p class="lead">
+  <strong>Published:</strong>
+  <%= @post.published ?  "👍"  : "👎"%>
+</p>
+<hr/>
+<%= link_to 'Edit', edit_post_path(@post), :class => 'btn btn-md btn-primary' %> 
+<%= link_to 'Back', posts_path, :class => 'btn btn-md btn-secondary'  %>

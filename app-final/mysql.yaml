@@ -1,0 +1,73 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql-server
+  labels:
+    app: database
+spec:
+  replicas: 1
+  revisionHistoryLimit: 100
+  template:
+    metadata: 
+       labels:
+         app: database
+    spec:
+      containers:
+            - name: mysql
+              image: launcher.gcr.io/google/mysql5
+              env:
+                - name: "MYSQL_ROOT_PASSWORD"
+                  valueFrom:
+                    secretKeyRef:
+                      name: mysql-secret
+                      key: root
+                - name: MYSQL_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: mysql-secret
+                      key: username
+                - name: MYSQL_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: mysql-secret
+                      key: password
+                - name: MYSQL_DATABASE
+                  valueFrom:
+                     configMapKeyRef:
+                      name: railsapp-configmap
+                      key: MYSQL_DATABASE
+              ports:
+                - containerPort: 3306
+                  name: mysql-port
+              volumeMounts:
+                - name: data
+                  mountPath: /var/lib/mysql
+                  subPath: data
+                - name: mysql-configmap
+                  mountPath: /etc/mysql/conf.d  
+              livenessProbe:
+                tcpSocket:
+                  port: 3306
+                initialDelaySeconds: 30
+                timeoutSeconds: 1
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: rails-db-claim
+        - name: mysql-configmap
+          configMap:
+            name: mysql-configmap
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: database
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3306
+    protocol: TCP 
+  selector:
+    app: database

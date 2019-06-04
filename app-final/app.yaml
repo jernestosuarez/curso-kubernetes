@@ -1,0 +1,81 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: rails-app-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rails-app
+    spec:
+      initContainers:
+       - name: setup-database
+         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/cool-app:v.0.2
+         command: ["rails","db:create"]
+         envFrom:
+            - configMapRef:
+                name: railsapp-configmap
+         env:
+            - name: "MYSQL_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: username
+            - name: "MYSQL_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
+       - name: schema-migration
+         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/cool-app:v.0.2
+         command: ["rails","db:migrate"]
+         envFrom:
+            - configMapRef:
+                name: railsapp-configmap
+         env:
+            - name: "MYSQL_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: username
+            - name: "MYSQL_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
+      containers:
+       - name: demo
+         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/cool-app:v.0.2
+         command: ["foreman","start","-f","Procfile.dev"]
+         envFrom:
+            - configMapRef:
+                name: railsapp-configmap
+         env:
+            - name: "MYSQL_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: username
+            - name: "MYSQL_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
+         ports:
+            - containerPort: 5000
+              name: foreman-port
+#Montar el Liveness
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rails-app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: rails-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: foreman-port
