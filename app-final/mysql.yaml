@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: mysql-server
+  name: mysql-server-rails
   labels:
     app: database
 spec:
@@ -19,17 +19,17 @@ spec:
                 - name: "MYSQL_ROOT_PASSWORD"
                   valueFrom:
                     secretKeyRef:
-                      name: mysql-secret
+                      name: mysql-rails-secret
                       key: root
                 - name: MYSQL_USER
                   valueFrom:
                     secretKeyRef:
-                      name: mysql-secret
+                      name: mysql-rails-secret
                       key: username
                 - name: MYSQL_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: mysql-secret
+                      name: mysql-rails-secret
                       key: password
                 - name: MYSQL_DATABASE
                   valueFrom:

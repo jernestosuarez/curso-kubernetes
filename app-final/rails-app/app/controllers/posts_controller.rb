@@ -21,6 +21,19 @@ class PostsController < ApplicationController
   def edit
   end
 
+  def alive
+    render text: "alive!", status: :ok
+  end
+
+  def ready
+    @posts = Post.all
+    unless @posts.nil?
+      render text: "Ready!", status: :ok
+    else
+      render text: "Wait...", status: :unprocessable_entity
+    end
+  end
+
   # POST /posts
   # POST /posts.json
   def create

@@ -4,6 +4,7 @@ metadata:
   name: rails-database
   labels:
     app: rails-app
+    component: database
 spec:
   capacity:
     storage: 10Gi
@@ -29,3 +30,4 @@ spec:
   selector: 
     matchLabels: 
       app: rails-app
+      component: database

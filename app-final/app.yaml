@@ -11,7 +11,7 @@ spec:
     spec:
       initContainers:
        - name: setup-database
-         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/cool-app:v.0.2
+         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/cool-app:v.0.4
          command: ["rails","db:create"]
          envFrom:
             - configMapRef:
@@ -20,15 +20,15 @@ spec:
             - name: "MYSQL_USER"
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
+                  name: mysql-rails-secret
                   key: username
             - name: "MYSQL_PASSWORD"
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
+                  name: mysql-rails-secret
                   key: password
        - name: schema-migration
-         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/cool-app:v.0.2
+         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/cool-app:v.0.4
          command: ["rails","db:migrate"]
          envFrom:
             - configMapRef:
@@ -37,16 +37,16 @@ spec:
             - name: "MYSQL_USER"
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
+                  name: mysql-rails-secret
                   key: username
             - name: "MYSQL_PASSWORD"
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
+                  name: mysql-rails-secret
                   key: password
       containers:
        - name: demo
-         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/cool-app:v.0.2
+         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/cool-app:v.0.4
          command: ["foreman","start","-f","Procfile.dev"]
          envFrom:
             - configMapRef:
@@ -55,16 +55,37 @@ spec:
             - name: "MYSQL_USER"
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
+                  name: mysql-rails-secret
                   key: username
             - name: "MYSQL_PASSWORD"
               valueFrom:
                 secretKeyRef:
-                  name: mysql-secret
+                  name: mysql-rails-secret
                   key: password
          ports:
             - containerPort: 5000
               name: foreman-port
+         volumeMounts:
+          - name: activestorage
+            mountPath: /app/storage
+         livenessProbe:
+            httpGet:
+              path: /monitoring/alive
+              port: foreman-port
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            periodSeconds: 15
+         readinessProbe:
+            httpGet:
+              path: /monitoring/ready
+              port: foreman-port
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
+            periodSeconds: 15
+      volumes:
+        - name: activestorage
+          persistentVolumeClaim:
+            claimName: rails-activestorage-claim
 #Montar el Liveness
 ---
 apiVersion: v1
