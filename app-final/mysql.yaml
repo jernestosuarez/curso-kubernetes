@@ -56,7 +56,7 @@ spec:
             claimName: rails-db-claim
         - name: mysql-configmap
           configMap:
-            name: mysql-configmap
+            name: mysql-rails-configmap
 ---
 apiVersion: v1
 kind: Service

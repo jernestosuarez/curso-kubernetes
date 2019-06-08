@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: mysql-configmap
+  name: mysql-rails-configmap
 data:
   charset.cnf: |
     [client]
