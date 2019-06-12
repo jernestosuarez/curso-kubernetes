@@ -3,7 +3,7 @@ kind: PersistentVolume
 metadata:
   name: rails-storage
   labels:
-    app: rails-app
+    app: app-final
     component: active-storage
 spec:
   capacity:
@@ -19,7 +19,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: rails-activestorage-claim
   labels:
-    app: rails-app
+    app: app-final
 spec:
   accessModes:
     - ReadWriteOnce
@@ -29,5 +29,5 @@ spec:
       storage: 10Gi
   selector:
     matchLabels:
-      app: rails-app
+      app: app-final
       component: active-storage

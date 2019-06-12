@@ -7,6 +7,7 @@ metadata:
 spec:
   containers:
     - name: demo
-      image: eu.gcr.io/ramina/web:last
+      image: eu.gcr.io/decem-242714/apache-basic:v.0.1
       ports:
         - containerPort: 80
+        

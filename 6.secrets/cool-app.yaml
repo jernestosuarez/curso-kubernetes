@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
        - name: demo
-         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/cool-app:latest
+         image: eu.gcr.io/decem-242714/cool-app:v.0.1
          ports:
            - containerPort: 3000
              name: rails-port  

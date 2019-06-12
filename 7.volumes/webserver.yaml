@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: demo
-      image: eu.gcr.io/wdps-prj-terraform-e8b60c97/web-empty:v1
+      image: eu.gcr.io/decem-242714/apache-empty:v.0.1
       ports:
         - containerPort: 80
       volumeMounts:

@@ -1,5 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
+metadata:
+  name: backend-config
 data:
   REDIS_URL: "redis://redis:6379/0"
   CELERY_BROKER_URL: "redis://redis:6379/0"
@@ -25,5 +27,4 @@ data:
   DJANGO_AWS_ACCESS_KEY_ID: "AOURHFEO3OINAFO34FF"
   DJANGO_AWS_SECRET_ACCESS_KEY: "W/0+3sdndfbceERDNSasdaeDADAa00sae"
   DJANGO_AWS_STORAGE_BUCKET_NAME: "django-static-bucket"
-metadata:
-  name: backend-config
+

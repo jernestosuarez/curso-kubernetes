@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
        - name: demo
-         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/node:latest
+         image: eu.gcr.io/decem-242714/node-host:v.0.1
          ports:
            - containerPort: 3000
              name: nodejs-port  
@@ -19,7 +19,7 @@ spec:
              httpGet:
                path: /
                port: 3000
-             initialDelaySeconds: 15
+             initialDelaySeconds: 35
              timeoutSeconds: 30
          readinessProbe:
              httpGet:

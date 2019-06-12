@@ -1,17 +1,17 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: rails-app-deployment
+  name: app-final-deployment
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: rails-app
+        app: app-final
     spec:
       initContainers:
        - name: setup-database
-         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/cool-app:v.0.4
+         image: eu.gcr.io/decem-242714/app-final:v.0.1
          command: ["rails","db:create"]
          envFrom:
             - configMapRef:
@@ -28,7 +28,7 @@ spec:
                   name: mysql-rails-secret
                   key: password
        - name: schema-migration
-         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/cool-app:v.0.4
+         image: eu.gcr.io/decem-242714/app-final:v.0.1
          command: ["rails","db:migrate"]
          envFrom:
             - configMapRef:
@@ -46,7 +46,7 @@ spec:
                   key: password
       containers:
        - name: demo
-         image: eu.gcr.io/wdps-prj-terraform-e8b60c97/cool-app:v.0.4
+         image: eu.gcr.io/decem-242714/app-final:v.0.1
          command: ["foreman","start","-f","Procfile.dev"]
          envFrom:
             - configMapRef:
@@ -91,11 +91,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rails-app-service
+  name: app-final-service
 spec:
   type: LoadBalancer
   selector:
-    app: rails-app
+    app: app-final
   ports:
   - protocol: TCP
     port: 80
