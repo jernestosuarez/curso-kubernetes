@@ -6,7 +6,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-type: basic
     nginx.ingress.kubernetes.io/auth-secret: basic-auth
     nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - Service'
-    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/ingress.class: nginx
 spec:
   tls:
   - hosts:
@@ -20,19 +20,12 @@ spec:
         backend:
           serviceName: cool-app
           servicePort: 80
-  - host: apache.edu.wedoops.io
+  - host: deploy.edu.wedoops.io
     http:
       paths:
       - path: /
         backend:
-          serviceName: first-app-service
-          servicePort: 80
-  - host: node.edu.wedoops.io
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: awesome-service
+          serviceName: first-deploy-service
           servicePort: 80
   - host: sinatra.edu.wedoops.io
     http:

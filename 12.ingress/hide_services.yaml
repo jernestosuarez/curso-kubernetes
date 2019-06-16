@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-final-service
+spec:
+  type: ClusterIP
+  selector:
+    app: app-final
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: foreman-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: first-app-service
+spec:
+  type: ClusterIP
+  selector:
+    app: firstapp
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: nodejs-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: first-deploy-service
+spec:
+  type: ClusterIP
+  selector:
+    app: firstdeploy
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: nodejs-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: awesome-service
+spec:
+  type: ClusterIP
+  selector:
+    app: firstapp
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: nodejs-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cool-app
+spec:
+  type:
+  type: ClusterIP
+  selector:
+    app: rails
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: rails-port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sinatra
+spec:
+  type: ClusterIP
+  selector:
+    app: sinatra
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 4567
