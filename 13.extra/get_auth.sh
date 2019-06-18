@@ -1,0 +1,1 @@
+echo "PASS: $(kubectl get secret basic-auth -o jsonpath="{.data.auth}" | base64 --decode)"

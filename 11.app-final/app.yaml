@@ -86,17 +86,3 @@ spec:
         - name: activestorage
           persistentVolumeClaim:
             claimName: rails-activestorage-claim
-#Montar el Liveness
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: app-final-service
-spec:
-  type: LoadBalancer
-  selector:
-    app: app-final
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: foreman-port

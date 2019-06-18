@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-final-service
+spec:
+  selector:
+    app: app-final
+  ports:
+  - protocol: TCP
+    port: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: first-deploy-service
+spec:
+  selector:
+    app: firstdeploy
+  ports:
+  - protocol: TCP
+    port:  3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cool-app
+spec:
+  type:
+  selector:
+    app: rails
+  ports:
+  - protocol: TCP
+    port: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sinatra
+spec:
+  selector:
+    app: sinatra
+  ports:
+  - protocol: TCP
+    port: 4567
